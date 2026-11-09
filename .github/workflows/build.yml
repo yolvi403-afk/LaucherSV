@@ -4,20 +4,20 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '8.0.x'
-      - uses: actions/setup-java@v4
+          dotnet-version: '10.0.x'
+      - uses: actions/setup-java@v5
         with:
           distribution: microsoft
           java-version: '17'
       - run: dotnet workload install android
       - name: Compilar
         run: dotnet build "$(find . -name LauncherSV.csproj | head -1)" -c Debug -p:EmbedAssembliesIntoApk=true
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: launcher-apk
           path: '**/*-Signed.apk'
